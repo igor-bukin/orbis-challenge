@@ -17,7 +17,6 @@ vendor/
 .idea/
 /bin/*
 src/go.sum
-src/glide.lock
 go.sum
 
 config.json

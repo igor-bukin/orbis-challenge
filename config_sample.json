@@ -1,0 +1,36 @@
+{
+    "listen_url": ":8080",
+    "url_prefix": "/api",
+    "log_preset": "dev",
+    "pagination_limit": 100,
+    "postgres": {
+        "host": "localhost",
+        "port": "5432",
+        "db_name": "orbis-api-db",
+        "user": "postgres",
+        "password": "12345",
+        "pool_size": 10,
+        "read_timeout": "10s",
+        "write_timeout": "10s",
+        "max_retries": 5
+    },
+    "postgres_test": {
+        "host": "localhost",
+        "port": "5432",
+        "db_name": "orbis-api-db-test",
+        "user": "postgres",
+        "password": "12345",
+        "pool_size": 10,
+        "read_timeout": "10s",
+        "write_timeout": "10s",
+        "max_retries": 5
+    },
+    "redis": {
+        "addrs": "localhost:6379",
+        "password": "wu1ohr5Eipun8Eim",
+        "pool_size": 10
+    },
+    "token": {
+        "secret": "qwerty123456789"
+    }
+}

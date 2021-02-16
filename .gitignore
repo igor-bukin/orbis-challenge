@@ -1,0 +1,27 @@
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.zip
+
+# Output of the go coverage tool and logs
+*.out
+*.xml
+*.log
+
+# Automatically generated
+vendor/
+
+# Local specifics
+.idea/
+/bin/*
+src/go.sum
+src/glide.lock
+go.sum
+
+config.json
+config-dev.json
+config-prod.json
+# osx artifacts
+.DS_Store

@@ -1,7 +1,7 @@
 {
     "listen_url": ":8080",
     "url_prefix": "/api",
-    "log_preset": "dev",
+    "log_preset": "debug",
     "pagination_limit": 100,
     "postgres": {
         "host": "localhost",

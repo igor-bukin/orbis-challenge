@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS holdings
 (
     id         UUID          NOT NULL DEFAULT uuid_generate_v4(),
     name       text          NOT NULL,
-    weight     NUMERIC(3, 2) NOT NULL,
+    weight     NUMERIC(5, 2) NOT NULL,
 
     etfs_id    UUID          NOT NULL references etfs (id),
 

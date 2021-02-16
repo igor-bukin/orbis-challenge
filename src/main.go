@@ -28,26 +28,31 @@ func main() {
 		log.Fatalf("Failed to initialize Config: %s", err.Error())
 	}
 
-	logrus.SetLevel(logrus.DebugLevel)
+	// setup log-level
+	logLevel, err := logrus.ParseLevel(config.Config.LogPreset)
+	if err != nil {
+		logrus.Fatal("cannot parse log level", err)
+	}
+	logrus.SetLevel(logLevel)
 
 	err = postgres.Load(&config.Config.Postgres, logrus.StandardLogger())
 	if err != nil {
-		logrus.Fatal(fmt.Sprintf("cannot connect to the Postgres server with config [%+v]: %v",
-			config.Config.Postgres, err))
+		logrus.Fatalf("cannot connect to the Postgres server with config [%+v]: %v",
+			config.Config.Postgres, err)
 	}
 
 	err = redis.Load(config.Config.Redis)
 	if err != nil {
-		logrus.Fatal(fmt.Sprintf("cannot connect to the Redis server with config [%+v]: %v",
-			config.Config.Redis, err))
+		logrus.Fatalf("cannot connect to the Redis server with config [%+v]: %v",
+			config.Config.Redis, err)
 	}
 
 	if err = validator.Load(); err != nil {
-		logrus.Fatal(fmt.Sprintf("cannot initialize validator: %v", err))
+		logrus.Fatalf("cannot initialize validator: %v", err)
 	}
 
 	if err = services.Load(redis.GetRedis(), postgres.GetDB(), &config.Config); err != nil {
-		logrus.Fatal(fmt.Sprintf("cannot initialize services: %v", err))
+		logrus.Fatalf("cannot initialize services: %v", err)
 	}
 
 	corsInstance := cors.New(cors.Options{

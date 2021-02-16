@@ -11,7 +11,6 @@ import (
 
 func (s service) Login(ctx context.Context, loginReq models.LoginRequest) (models.Token, httperrors.HTTPError) {
 	tx := s.pg.QueryContext(ctx)
-	defer tx.Rollback() // nolint:errcheck
 
 	u, err := tx.GetUserByEmail(loginReq.Email)
 	if err != nil {

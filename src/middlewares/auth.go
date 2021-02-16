@@ -10,7 +10,6 @@ import (
 	"github.com/orbis-challenge/src/services"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-	"go.uber.org/zap"
 )
 
 const (
@@ -34,14 +33,14 @@ func Auth(next http.Handler) http.Handler {
 func ParseAndProcessAuthToken(w http.ResponseWriter, r *http.Request, authToken string) context.Context {
 	jwtToken, err := ParseAuthorizationHeader(authToken)
 	if err != nil {
-		logrus.Error("Token is invalid", zap.String("token", authToken))
+		logrus.Error("Token is invalid", "token", authToken)
 		common.SendHTTPError(w, httperrors.NewUnauthorizedError(err))
 		return nil
 	}
 
 	_, err = services.Get().Jwt().Validate(jwtToken)
 	if err != nil {
-		logrus.Error("Token is invalid", zap.String("token", jwtToken))
+		logrus.Error("Token is invalid", "token", jwtToken)
 		common.SendHTTPError(w, httperrors.NewUnauthorizedError(err))
 		return nil
 	}

@@ -10,7 +10,6 @@ import (
 	_ "github.com/lib/pq" // import postgres driver for sql.Open()
 	"github.com/orbis-challenge/src/config"
 	"github.com/sirupsen/logrus"
-	"go.uber.org/zap"
 	"gopkg.in/testfixtures.v2"
 )
 
@@ -24,7 +23,7 @@ var (
 func init() { // nolint
 	err := config.Load("../../../config.json")
 	if err != nil {
-		logrus.Fatal("failed to load config", zap.Error(err))
+		logrus.Fatal("failed to load config", "error", err)
 	}
 
 	dbConf := config.Config.PostgresTest
@@ -32,7 +31,7 @@ func init() { // nolint
 	db, err = sql.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		dbConf.Host, dbConf.Port, dbConf.User, dbConf.Password, dbConf.DBName))
 	if err != nil {
-		logrus.Fatal("failed to open sql.DBName with test db config", zap.Error(err))
+		logrus.Fatal("failed to open sql.DBName with test db config", "error", err)
 	}
 
 	// getting location of fixtures path
@@ -42,7 +41,7 @@ func init() { // nolint
 	// creating the context that hold the fixtures
 	fixtures, err = testfixtures.NewFolder(db, &testfixtures.PostgreSQL{}, filepath.Join(path, "data"))
 	if err != nil {
-		logrus.Fatal("failed to load postgres test db fixtures", zap.Error(err))
+		logrus.Fatal("failed to load postgres test db fixtures", "error", err)
 	}
 
 	p = pg.Connect(&pg.Options{

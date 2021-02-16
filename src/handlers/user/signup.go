@@ -7,7 +7,6 @@ import (
 	"github.com/orbis-challenge/src/models"
 	"github.com/orbis-challenge/src/services"
 	"github.com/sirupsen/logrus"
-	"go.uber.org/zap"
 )
 
 // SignUp - creating of new user.
@@ -31,9 +30,7 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 
 	httpErr = services.Get().User().SignUp(ctx, signUpReq)
 	if httpErr != nil {
-		logrus.Error("signup user error",
-			zap.String("email", signUpReq.Email),
-			zap.Error(httpErr))
+		logrus.Error("signup user error", "email", signUpReq.Email, "error", httpErr)
 		common.SendHTTPError(w, httpErr)
 		return
 	}

@@ -7,7 +7,6 @@ import (
 	"github.com/orbis-challenge/src/models"
 	"github.com/orbis-challenge/src/services"
 	"github.com/sirupsen/logrus"
-	"go.uber.org/zap"
 )
 
 // Load - load top of etfs
@@ -18,8 +17,7 @@ func Load(w http.ResponseWriter, r *http.Request) {
 
 	httpErr := services.Get().Holding().Load(ctx)
 	if httpErr != nil {
-		logrus.Error("couldn't load list of etfs",
-			zap.Error(httpErr))
+		logrus.Error("couldn't load list of etfs", "error", httpErr)
 		common.SendHTTPError(w, httpErr)
 		return
 	}
@@ -40,8 +38,7 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 
 	res, c, httpErr := services.Get().Holding().GetAll(ctx, limit, offset)
 	if httpErr != nil {
-		logrus.Error("couldn't get list of etfs",
-			zap.Error(httpErr))
+		logrus.Error("couldn't get list of etfs", "error", httpErr)
 		common.SendHTTPError(w, httpErr)
 		return
 	}
@@ -63,8 +60,7 @@ func GetByTicker(w http.ResponseWriter, r *http.Request) {
 
 	res, httpErr := services.Get().Holding().GetByTicker(ctx, ticker)
 	if httpErr != nil {
-		logrus.Error("couldn't get etf by ticker",
-			zap.Error(httpErr))
+		logrus.Error("couldn't get etf by ticker", "error", httpErr)
 		common.SendHTTPError(w, httpErr)
 		return
 	}

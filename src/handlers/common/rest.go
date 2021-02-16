@@ -14,7 +14,6 @@ import (
 	"github.com/orbis-challenge/src/validator"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-	"go.uber.org/zap"
 )
 
 // SendResponse - common method for encoding and writing any json response
@@ -60,7 +59,7 @@ func UnmarshalRequestBody(r *http.Request, body interface{}) httperrors.HTTPErro
 			Description: httperrors.ErrorDescriptions[httperrors.JSONReadErr],
 		}
 
-		logrus.Error("Invalid request body", zap.Error(err))
+		logrus.Error("Invalid request body", "error", err)
 		return serverError
 	}
 	defer r.Body.Close()
@@ -72,8 +71,7 @@ func UnmarshalRequestBody(r *http.Request, body interface{}) httperrors.HTTPErro
 			Description: httperrors.ErrorDescriptions[httperrors.JSONParseErr],
 		}
 
-		logrus.Error("Invalid JSON request body",
-			zap.Error(err), zap.String("Corrupted JSON", string(reqBody)))
+		logrus.Error("Invalid JSON request body", "error", err, "Corrupted JSON", string(reqBody))
 
 		return serverError
 	}
@@ -87,7 +85,7 @@ func ValidateRequestBody(r *http.Request, body interface{}) httperrors.HTTPError
 	if err != nil {
 		serverError := httperrors.NewBadRequestError(err)
 
-		logrus.Info("request body validation failed", zap.Error(err))
+		logrus.Info("request body validation failed", "error", err)
 		return serverError
 	}
 
@@ -101,7 +99,7 @@ func ValidateRequestBodyWithErrors(r *http.Request, body interface{}) httperrors
 		validationErrors := err.(v.ValidationErrors)
 		serverError := validator.FormatErrors(validationErrors)
 
-		logrus.Info("request body validation failed", zap.Error(err))
+		logrus.Info("request body validation failed", "error", err)
 		return serverError
 	}
 

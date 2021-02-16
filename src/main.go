@@ -14,7 +14,6 @@ import (
 	"github.com/orbis-challenge/src/validator"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
-	"go.uber.org/zap"
 )
 
 // defaultConfigPath defines a path to JSON-config file
@@ -71,7 +70,7 @@ func main() {
 
 	err = server.ListenAndServe()
 	if err != nil {
-		logrus.Error("Failed to initialize HTTP server", zap.Error(err))
+		logrus.Error("Failed to initialize HTTP server", "error", err)
 		os.Exit(1)
 	}
 }

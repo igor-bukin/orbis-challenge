@@ -7,7 +7,6 @@ import (
 	"github.com/orbis-challenge/src/models"
 	"github.com/orbis-challenge/src/services"
 	"github.com/sirupsen/logrus"
-	"go.uber.org/zap"
 )
 
 // Login - authenticates user.
@@ -31,9 +30,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	token, httpErr := services.Get().User().Login(ctx, loginRequest)
 	if httpErr != nil {
-		logrus.Error("login user error",
-			zap.String("email", loginRequest.Email),
-			zap.Error(httpErr))
+		logrus.Error("login user error", "email", loginRequest.Email, "error", httpErr)
 		common.SendHTTPError(w, httpErr)
 		return
 	}

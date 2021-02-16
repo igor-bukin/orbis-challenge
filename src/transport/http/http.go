@@ -10,14 +10,13 @@ import (
 
 	"github.com/orbis-challenge/src/config"
 	"github.com/sirupsen/logrus"
-	"go.uber.org/zap"
 )
 
 // NewClient http client constructor
 func NewClient() *http.Client {
 	timeout, err := time.ParseDuration(config.Config.HTTPTimeout)
 	if err != nil {
-		logrus.Error("parse timeout config", zap.Error(err))
+		logrus.Error("parse timeout config", "error", err)
 		return nil
 	}
 
@@ -49,7 +48,7 @@ func NewClientWithTimeout(timeout time.Duration) *http.Client {
 func CloseResponseBody(resp *http.Response) {
 	_, err := io.Copy(ioutil.Discard, resp.Body)
 	if err != nil {
-		logrus.Error("discard response's body", zap.Error(err))
+		logrus.Error("discard response's body", "error", err)
 	}
 
 	resp.Body.Close()

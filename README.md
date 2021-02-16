@@ -35,33 +35,3 @@ edit ``config.json`` if need then
 or:
 
 ``go run src/main.go``
-
-### CI-CD
-
-use gophers/ci-cd repository for multiservice architecture
-
-and will look like .gitlab-ci.yml :
-
-```
-image: gitlab.yalantis.com:4567/gophers/ci-cd/services/go-builder:latest
-
-stages:
-  - dependencies
-  - test
-  - go-build
-  - build
-  - deploy
-
-include:
-  - project: 'GROUP_NAME/ci-cd'
-    file: '/go-templates/main.yml'  
-    - project: 'GROUP_NAME/ci-cd'
-    file: '/go-templates/dependencies.yml'  
-    - project: 'GROUP_NAME/ci-cd'
-    file: '/go-templates/tests.yml'  
-    - project: 'GROUP_NAME/ci-cd'
-    file: '/go-templates/linter.yml'  
-    - project: 'GROUP_NAME/ci-cd'
-    file: '/go-templates/build.yml'  
-    - project: 'GROUP_NAME/ci-cd'
- ```

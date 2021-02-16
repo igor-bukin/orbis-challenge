@@ -22,7 +22,7 @@ type (
 	// Configuration options
 	Configuration struct {
 		AppName      string   `json:"app_name"      envconfig:"APP_NAME"   default:"orbis-challenge"`
-		LogPreset    string   `json:"log_preset"    envconfig:"LOG_PRESET" default:"dev"`
+		LogPreset    string   `json:"log_preset"    envconfig:"LOG_PRESET" default:"debug"`
 		ListenURL    string   `json:"listen_url"    envconfig:"LISTEN_URL" default:":8888"`
 		URLPrefix    string   `json:"url_prefix"    envconfig:"URL_PREFIX" default:"/api"`
 		Token        Token    `json:"token"`

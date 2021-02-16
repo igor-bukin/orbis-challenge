@@ -1,9 +1,5 @@
 ## API project template
 
-### Dependency Management
-
-Use ``glide`` tool. Add to ``glide.yaml`` vcs links with particular versions or hash commits and run:
-
 ``make dep``
 
 ### Build

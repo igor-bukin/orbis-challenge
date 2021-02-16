@@ -15,6 +15,8 @@ func (s service) Update() httperrors.HTTPError {
 		return httperrors.NewInternalServerError(errors.Wrap(err, "start transaction"))
 	}
 
+	defer tx.Rollback() // nolint
+
 	limit := 20
 	offset := 0
 
@@ -50,6 +52,10 @@ func (s service) Update() httperrors.HTTPError {
 				continue
 			}
 		}
+	}
+
+	if err := tx.Commit(); err != nil {
+		return httperrors.NewInternalServerError(err)
 	}
 
 	return nil

@@ -14,7 +14,8 @@ func (s service) SignUp(ctx context.Context, signUpReq models.SignUpRequest) htt
 	if err != nil {
 		return httperrors.NewInternalServerError(errors.Wrap(err, "start transaction"))
 	}
-	defer tx.Rollback() // nolint:errcheck
+
+	defer tx.Rollback() // nolint
 
 	password, encErr := s.encryptSrv.EncryptPassword(signUpReq.Password)
 	if encErr != nil {
@@ -31,6 +32,10 @@ func (s service) SignUp(ctx context.Context, signUpReq models.SignUpRequest) htt
 		if ok && pgErr.IntegrityViolation() {
 			return httperrors.NewAlreadyExistsError(err, "email")
 		}
+		return httperrors.NewInternalServerError(err)
+	}
+
+	if err := tx.Commit(); err != nil {
 		return httperrors.NewInternalServerError(err)
 	}
 

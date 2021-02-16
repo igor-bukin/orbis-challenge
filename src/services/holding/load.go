@@ -24,6 +24,8 @@ func (s service) Load(ctx context.Context) httperrors.HTTPError {
 		return httperrors.NewInternalServerError(errors.Wrap(err, "start transaction"))
 	}
 
+	defer tx.Rollback() // nolint
+
 	for i := range etfs.Data.Funds.Etfs.Datas {
 		etfRaw := etfs.Data.Funds.Etfs.Datas[i]
 		etf := models.Etf{
